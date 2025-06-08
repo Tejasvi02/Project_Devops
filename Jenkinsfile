@@ -18,7 +18,7 @@ pipeline {
             parallel {
                 stage('Service A') {
                     steps {
-                        dir('service-a') {
+                        dir('order-ms') {
                             sh 'mvn clean package -DskipTests'
                             script {
                                 def image = docker.build("${DOCKERHUB_USERNAME}/service-a:${BUILD_NUMBER}")
@@ -32,7 +32,7 @@ pipeline {
 
                 stage('Service B') {
                     steps {
-                        dir('service-b') {
+                        dir('stock-ms') {
                             sh 'mvn clean package -DskipTests'
                             script {
                                 def image = docker.build("${DOCKERHUB_USERNAME}/service-b:${BUILD_NUMBER}")
@@ -46,7 +46,7 @@ pipeline {
 
                 stage('Service C') {
                     steps {
-                        dir('service-c') {
+                        dir('delivery-ms') {
                             sh 'mvn clean package -DskipTests'
                             script {
                                 def image = docker.build("${DOCKERHUB_USERNAME}/service-c:${BUILD_NUMBER}")
