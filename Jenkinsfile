@@ -5,6 +5,7 @@ pipeline {
         DOCKER_CREDS = 'dockerhub-creds'
         GITHUB_CREDS = 'github-creds'
         DOCKERHUB_USERNAME = 'tejasb02'
+        DOCKER_BUILDKIT = '1'
     }
 
     stages {
@@ -67,6 +68,9 @@ pipeline {
         }
         failure {
             echo '❌ Build or push failed.'
+        }
+        always {
+            cleanWs()
         }
     }
 }
