@@ -16,17 +16,6 @@ pipeline {
             }
         }
 
-        stage('Provision EKS via Terraform') {
-            steps {
-                dir('terraform') {
-                    sh '''
-                    terraform init -reconfigure
-                    terraform apply -auto-approve -lock=false
-                    '''
-                }
-            }
-        }
-
         stage('Build & Push Docker Images') {
             parallel {
                 stage('Service A') {
