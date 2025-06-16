@@ -20,7 +20,7 @@ pipeline {
             steps {
                 dir('terraform') {
                     sh '''
-                    terraform init
+                    terraform init -reconfigure
                     terraform apply -auto-approve
                     '''
                 }
