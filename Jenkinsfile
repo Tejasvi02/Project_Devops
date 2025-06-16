@@ -64,18 +64,22 @@ pipeline {
 
         stage('Deploy to EKS') {
             steps {
-                withEnv(["KUBECONFIG=/home/jenkins/.kube/config"]) {
-                    sh '''
-                    aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
+                withCredentials([usernamePassword(credentialsId: 'aws-creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    withEnv(["KUBECONFIG=/home/jenkins/.kube/config"]) {
+                        sh '''
+                        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+                        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+                        aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
 
-                    kubectl apply -f k8s/order/
-                    kubectl apply -f k8s/stock/
-                    kubectl apply -f k8s/delivery/
-                    '''
+                        kubectl apply -f k8s/order/
+                        kubectl apply -f k8s/stock/
+                        kubectl apply -f k8s/delivery/
+                        '''
+                    }
                 }
             }
         }
-    }
+
 
     post {
         success {
