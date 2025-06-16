@@ -21,7 +21,7 @@ pipeline {
                 dir('terraform') {
                     sh '''
                     terraform init -reconfigure
-                    terraform apply -auto-approve
+                    terraform apply -auto-approve -lock=false
                     '''
                 }
             }
