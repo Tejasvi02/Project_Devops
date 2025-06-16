@@ -5,6 +5,8 @@ pipeline {
         DOCKER_CREDS = 'dockerhub-creds'
         GITHUB_CREDS = 'github-creds'
         DOCKERHUB_USERNAME = 'tejasb02'
+        AWS_REGION = 'us-east-1'
+        CLUSTER_NAME = 'my-eks-cluster'
     }
 
     stages {
@@ -59,18 +61,28 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to EKS') {
+            steps {
+                withEnv(["KUBECONFIG=/home/jenkins/.kube/config"]) {
+                    sh '''
+                    aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
+
+                    kubectl apply -f k8s/order/
+                    kubectl apply -f k8s/stock/
+                    kubectl apply -f k8s/delivery/
+                    '''
+                }
+            }
+        }
     }
 
     post {
         success {
-            echo '✅ All services built and pushed successfully.'
+            echo '✅ Deployed to EKS successfully.'
         }
         failure {
-            echo '❌ Build or push failed.'
-        }
-        always {
-            cleanWs()
+            echo '❌ Deployment failed.'
         }
     }
 }
-
