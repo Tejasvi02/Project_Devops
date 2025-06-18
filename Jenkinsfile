@@ -65,7 +65,7 @@ pipeline {
         stage('Deploy to EKS') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'aws-creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                    withEnv(["KUBECONFIG=/home/jenkins/.kube/config"]) {
+                    withEnv(["KUBECONFIG=${env.WORKSPACE}/kubeconfig"]) { {
                         sh '''
                         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
                         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
