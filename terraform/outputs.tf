@@ -11,9 +11,9 @@ output "certificate_authority" {
 }
 
 output "vpc_id" {
-  value = aws_vpc.eks_vpc.id
+  value = module.vpc.vpc_id
 }
 
 output "public_subnet_ids" {
-  value = aws_subnet.public_subnets[*].id
+  value = module.vpc.public_subnets
 }
