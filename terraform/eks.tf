@@ -22,6 +22,7 @@ module "eks" {
   map_users    = []
   map_accounts = []
 
+  manage_aws_auth = false
   tags = {
     Environment = "dev"
     Terraform   = "true"
