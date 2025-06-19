@@ -18,6 +18,10 @@ module "eks" {
     }
   ]
 
+  map_roles    = []
+  map_users    = []
+  map_accounts = []
+
   tags = {
     Environment = "dev"
     Terraform   = "true"
