@@ -1,13 +1,13 @@
 output "cluster_name" {
-  value = module.eks.cluster_name
+  value = module.eks.cluster["name"]
 }
 
 output "eks_endpoint" {
-  value = module.eks.cluster_endpoint
+  value = module.eks.cluster["endpoint"]
 }
 
 output "certificate_authority" {
-  value = module.eks.cluster_certificate_authority_data
+  value = module.eks.cluster["certificate_authority"]
 }
 
 output "vpc_id" {
