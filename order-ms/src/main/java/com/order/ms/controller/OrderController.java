@@ -20,8 +20,8 @@ public class OrderController {
 	@Autowired
 	private OrderRepository repository;
 
-	//@Autowired
-	//private KafkaTemplate<String, OrderEvent> kafkaTemplate;
+	@Autowired
+	private KafkaTemplate<String, OrderEvent> kafkaTemplate;
 	
 	@GetMapping("/health")
 	public String HealthCheck() {
@@ -44,7 +44,7 @@ public class OrderController {
 			OrderEvent event = new OrderEvent();
 			event.setOrder(customerOrder);
 			event.setType("ORDER_CREATED");
-			//kafkaTemplate.send("new-orders", event);
+			kafkaTemplate.send("new-orders", event);
 		} catch (Exception e) {
 			order.setStatus("FAILED");
 			repository.save(order);
