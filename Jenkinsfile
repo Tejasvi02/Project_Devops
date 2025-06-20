@@ -25,6 +25,7 @@ pipeline {
                                 def image = docker.build("${DOCKERHUB_USERNAME}/service-a:${BUILD_NUMBER}")
                                 docker.withRegistry('', DOCKER_CREDS) {
                                     image.push()
+                                    image.push("latest")
                                 }
                             }
                         }
@@ -39,6 +40,7 @@ pipeline {
                                 def image = docker.build("${DOCKERHUB_USERNAME}/service-b:${BUILD_NUMBER}")
                                 docker.withRegistry('', DOCKER_CREDS) {
                                     image.push()
+                                    image.push("latest")
                                 }
                             }
                         }
@@ -53,6 +55,7 @@ pipeline {
                                 def image = docker.build("${DOCKERHUB_USERNAME}/service-c:${BUILD_NUMBER}")
                                 docker.withRegistry('', DOCKER_CREDS) {
                                     image.push()
+                                    image.push("latest")
                                 }
                             }
                         }
